@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/ture.css">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div class="page">
+            <div class="sub-header">
+                <div class="back"></div>
+                <div class="title">确认订单</div>
+            </div>
+            <div class="main">
+                <div class="address-wrap">
+                    <!-- <div class="persion-info" style="display:none;">
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="address" style="display: none;">
+                        <img src="images/home/cart/map.png" alt="">
+                        <span></span>
+                    </div>
+                    <div class="address-null">您的收货地址为空,点击添加收货地址</div>
+                    <div class="arrow"></div>
+                    <div class="address-border-wrap">
+                        <div class="trapezoid style1"></div>
+                        <div class="trapezoid style2"></div>
+                        <div class="trapezoid style1"></div>
+                        <div class="trapezoid style2"></div>
+                        <div class="trapezoid style1"></div>
+                        <div class="trapezoid style2"></div>
+                        <div class="trapezoid style1"></div>
+                        <div class="trapezoid style2"></div>
+                        <div class="trapezoid style1"></div>
+                        <div class="trapezoid style2"></div>
+                    </div> -->
+                </div>
+                <div class="goods-wrap">
+                    <div class="goods-list">
+                        <div class="image">
+                            <img src="" alt="">
+                        </div>
+                        <div class="goods-param">
+                            <div class="title"></div>
+                            <div class="attr">
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="amount"></div>
+                            <div class="price"></div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="total-wrap">
+                    <li>商品总额</li>
+                    <li></li>
+                </ul>
+                <ul class="total-wrap">
+                    <li>运费</li>
+                    <li></li>
+                </ul>
+            </div>
+            <div class="balance-wrap">
+                <div class="price-wrap">
+                    <span>实际金额：</span>
+                    <span></span>
+                </div>
+                <div class="balance-btn">提交订单</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var aimg=document.querySelector('img')
+        var title=document.querySelectorAll('.title')[1]
+        var aprice=document.querySelector('.price')
+        var aul=document.querySelectorAll('ul')[0]
+        var ali=aul.querySelectorAll('li')[1]
+        var oul=document.querySelectorAll('ul')[1]
+        var oli=oul.querySelectorAll('li')[1]
+        var wrap=document.querySelector('.price-wrap')
+        var span=wrap.querySelectorAll('span')[1]
+        var btn=document.querySelector('.balance-btn')
+        zz=JSON.parse( window.localStorage.getItem('gid'))
+        xx=JSON.parse( window.localStorage.getItem('xx'))
+        var input=document.querySelector('.amount')
+        input.innerHTML='x'+xx;
+        aimg.src=JSON.parse(zz.key2).data.images[0]
+        title.innerHTML=JSON.parse(zz.key2).data.title;
+        aprice.innerHTML="￥"+JSON.parse(zz.key2).data.price*JSON.parse( window.localStorage.getItem('xx'))
+        ali.innerHTML="￥"+JSON.parse(zz.key2).data.price*JSON.parse( window.localStorage.getItem('xx'))
+        oli.innerHTML="￥"+JSON.parse(zz.key2).data.freight
+        if(JSON.parse(zz.key1).data.length>1){
+            document.querySelectorAll('span')[0].innerHTML=JSON.parse(zz.key1).data[0].title+"："+window.localStorage.getItem('ll');
+            document.querySelectorAll('span')[1].innerHTML=JSON.parse(zz.key1).data[1].title+"："+window.localStorage.getItem('dd');
+        }else if(JSON.parse(zz.key1).data.length=1){
+            document.querySelectorAll('span')[0].innerHTML=JSON.parse(zz.key1).data[0].title+"："+window.localStorage.getItem('ll');
+        }
+        total=JSON.parse(zz.key2).data.price*JSON.parse( window.localStorage.getItem('xx')) +JSON.parse(zz.key2).data.freight
+        span.innerHTML="￥"+total;
+        btn.onclick=function(){
+            window.location.href='end.html';
+        }
+    </script>
+    <script>
+        all=window.localStorage.getItem('choose').split(",")
+        console.log(all)
+        var wrap=document.querySelector('.address-wrap')
+        wrap.innerHTML=
+        `
+        <div class="persion-info" style="display:block;">
+            <span>收货人：${all[0]}</span>
+            <span>${all[1]}</span>
+        </div>
+        <div class="address" style="display: block;">
+            <img src="images/home/cart/map.png" alt="">
+            <span>${all[2]}/${all[3]}</span>
+        </div>
+        <div class="address-null" style="display:none">您的收货地址为空,点击添加收货地址</div>
+        <div class="arrow"></div>
+        <div class="address-border-wrap">
+            <div class="trapezoid style1"></div>
+            <div class="trapezoid style2"></div>
+            <div class="trapezoid style1"></div>
+            <div class="trapezoid style2"></div>
+            <div class="trapezoid style1"></div>
+            <div class="trapezoid style2"></div>
+            <div class="trapezoid style1"></div>
+            <div class="trapezoid style2"></div>
+            <div class="trapezoid style1"></div>
+            <div class="trapezoid style2"></div>
+        </div>
+        `
+    </script>
+    <script src="js/ture.js"></script>
+</body>
+</html>

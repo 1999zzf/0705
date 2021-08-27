@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/ordermun.css">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div class="page">
+            <div class="sub-header">
+                <div class="back"></div>
+                <div class="title">订单详情</div> 
+            </div>
+            <div class="main">
+                <div class="ordermun"></div>
+                <div class="address-wrap">
+                    <div class="skew-wrap">
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                    </div>
+                    <div class="address-info"></div>
+                    <div class="skew-wrap">
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                    </div>
+                </div>
+                <div class="buy-title">购买的宝贝</div>
+                <div class="goods-list"></div>
+                <ul class="order-status"></ul>
+                <div class="total-wrap">
+                    <ul class="total">
+                        <li>商品总额</li>
+                        <li>255</li>
+                    </ul>
+                    <ul class="total">
+                        <li>+运费</li>
+                        <li>52</li>
+                    </ul>
+                </div>
+                <div class="true-total"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var aback=document.querySelector('.back');
+        aback.onclick=function(){
+            window.history.back(-1);
+        }
+        all=window.localStorage.getItem('choose').split(",")
+        var address=document.querySelector('.address-info')
+        address.innerHTML=
+        `
+        <div class="name">
+                            <img src="images/common/my2.png" alt="">${all[0]}
+                        </div>
+                        <div class="cellphone">
+                            <img src="images/common/cellphone.png" alt="">${all[1]}
+                        </div>
+                        <div class="address">${all[2]}/${all[3]}</div>
+        `
+        var goods=document.querySelector('.goods-list')
+        zz=JSON.parse( window.localStorage.getItem('gid'))
+        goods.innerHTML=
+        `
+        <div class="image">
+                        <img src="${JSON.parse(zz.key2).data.images[0]}" alt="">
+                    </div>
+                    <div class="goods-info">
+                        <div class="title">${JSON.parse(zz.key2).data.title}</div>
+                        <div class="attr">
+                            <span class="amount">${'x'+JSON.parse( window.localStorage.getItem('xx'))}</span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="price">￥${JSON.parse(zz.key2).data.price +JSON.parse(zz.key2).data.freight*JSON.parse( window.localStorage.getItem('xx'))}</div>
+        `
+        if(JSON.parse(zz.key1).data.length>1){
+            document.querySelectorAll('span')[1].innerHTML=JSON.parse(zz.key1).data[0].title+"："+window.localStorage.getItem('ll');
+            document.querySelectorAll('span')[2].innerHTML=JSON.parse(zz.key1).data[1].title+"："+window.localStorage.getItem('dd');
+        }else if(JSON.parse(zz.key1).data.length=1){
+            document.querySelectorAll('span')[1].innerHTML=JSON.parse(zz.key1).data[0].title+"："+window.localStorage.getItem('ll');
+        }
+        var orderstatus=document.querySelector('.order-status')
+        window.localStorage.getItem('now')
+        console.log(JSON.parse(window.localStorage.getItem('now')) )
+        orderstatus.innerHTML=
+        `
+        <li>支付状态</li>
+        <li>已收货</li>
+        `
+        var total=document.querySelector('.total-wrap')
+        zz=JSON.parse( window.localStorage.getItem('gid'))
+        xx=JSON.parse( window.localStorage.getItem('xx'))
+        total.innerHTML=
+        `
+        <ul class="total">
+                        <li>商品总额</li>
+                        <li>￥${(JSON.parse(zz.key2).data.price)*xx}</li>
+                    </ul>
+                    <ul class="total">
+                        <li>+运费</li>
+                        <li>${(JSON.parse(zz.key2).data.freight)}</li>
+                    </ul>
+        `
+        var atrue=document.querySelector('.true-total')
+        atrue.innerHTML=
+        `
+        <div class="total">
+                        实付金额：
+                        <span>￥${(JSON.parse(zz.key2).data.price+JSON.parse(zz.key2).data.freight)*xx}</span>
+                    </div>
+                    <div class="order-time">下单时间</div>
+        `
+        var ordermun=document.querySelector('.ordermun')
+        ordermun.innerHTML=
+        `
+        商品订单：${window.localStorage.getItem('aa')}
+        `
+    </script>
+</body>
+</html>

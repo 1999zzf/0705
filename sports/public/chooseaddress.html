@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/chooseaddress.css">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div class="page">
+            <div class="sub-header">
+                <div class="back"></div>
+                <div class="title">选择收货地址</div>
+            </div>
+            <div class="main">
+                <div class="address-nav">
+                    <div class="address-nav-name-1">配送地址</div>
+                    <div class="address-nav-name-2">+添加收货地址</div>
+                </div>
+                <div class="no-data" style="display: none;">您还没有添加收货地址</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let list=JSON.parse(localStorage.getItem('address')) 
+        console.log(list.length) 
+        var main=document.querySelector(".main")
+        console.log(main)
+        for(let i =0;i<list.length;i++){
+            console.log(list[i][0])
+            main.innerHTML+=
+            `
+            <div class="address-list">
+                <div class="address-info-wrap">
+                    <div class="address-info">
+                        <div class="person">
+                            <span>${list[i][0]}</span>
+                            <span>${list[i][1]}</span>
+                        </div>
+                        <div class="address">
+                            <span class="text">${list[i][2]}/${list[i][3]}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="handle-wrap">
+                    <div class="edit "></div>
+                    <div class="del"></div>
+                </div>
+            </div>
+            `
+        }
+            var edit=document.querySelectorAll('.edit')
+        console.log(edit.length)
+        for(let i =0;i<list.length;i++){
+            for(let j = 0; j < edit.length; j++){
+                edit[j].onclick = function(){
+                    window.location.href='add.html';
+                    window.localStorage.setItem('choose',list[j])
+                }
+            }
+        }
+        var info=document.querySelectorAll('.address-info')
+        for(let i =0;i<list.length;i++){
+            for(let j = 0; j < info.length; j++){
+                info[j].onclick = function(){
+                    console.log(list[j])
+                    window.location.href='ture.html';
+                    window.localStorage.setItem('choose',list[j])
+                }
+            }
+        }
+        
+        var del=document.querySelectorAll('.del')
+        var main=document.querySelector('.main')
+        var alist=document.querySelectorAll('.address-list')
+        for(var j = 0; j < del.length; j++){
+            del[j].index=j;
+            del[j].onclick = function(){
+                var _arr = JSON.parse(window.localStorage.getItem('address')) ;
+                console.log(_arr)
+                console.log(del.length)
+                console.log(_arr.length)
+                var len = _arr.length;
+                _arr.splice(this.index, 1);
+                location.reload();
+                localStorage.setItem("address", JSON.stringify(_arr));
+            }
+        }
+    </script>
+    <script src="js/chooseaddress.js"></script>
+</body>
+</html>

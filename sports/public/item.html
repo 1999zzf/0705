@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/item.css">
+    <script src="javascripts/template-web.js"></script>
+    <script src="javascripts/axios.js"></script>
+    <script src="javascripts/better-scroll.js"></script>
+    <!-- <script src="js/item.js"></script> -->
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div class="page">
+            <div class="search-header">
+                <div class="back"></div>
+                <div class="search">请输入宝贝名称</div>
+            </div>
+            <div class="goods-main">
+                <div class="classify-wrap">
+                    <div class="items" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);"></div>
+                </div>
+                <div class="goods-content">
+                    <div class="goods-content-main">
+                        <div style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+                            <div class="goods-wrap"></div>
+                            <div class="no-data" style="display: none;">没有相关的商品！</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="search-component">
+                <div class="search-header">
+                    <div class="close"></div>
+                    <div class="search-wrap">
+                        <div class="search-input-wrap">
+                            <input type="text" placeholder="请输入宝贝名称" class="search">
+                        </div>
+                        <button type="button" class="search-btn"></button>
+                    </div>
+                </div>
+                <div class="search-main">
+                    <div class="search-title-wrap">
+                        <div class="search-title">热门搜索</div>
+                    </div>
+                    <div class="search-keywords-wrap">
+                        <div class="keywords">连衣裙</div>
+                        <div class="keywords">电脑</div>
+                        <div class="keywords">群</div>
+                        <div class="keywords">韩都衣舍</div>
+                        <div class="keywords"></div>
+                        <div class="keywords">裤</div>
+                        <div class="keywords">羽绒服</div>
+                        <div class="keywords">裙装</div>
+                        <div class="keywords">鞋子</div>
+                        <div class="keywords">鞋</div>
+                        <div class="keywords">裤子</div>
+                        <div class="keywords">羽绒</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="shop3List" type="text/html">
+        {{each item}}
+            <div class="classify-item">{{$value.title}}</div>
+        
+        {{/each}}
+        
+    </script>
+    <script id="tmpls" type="text/html">
+        <%if(shuo.length==2){%>
+            <%for(var i=0;i<shuo.length;i++){%>
+                <div class="classify-name"><%=shuo[i].title%></div>
+                <div class="goods-items-wrap">
+                    <ul>
+                        <li><img src="<%=shuo[1].goods[0].image%>" alt=""></li>
+                        <li><%=shuo[1].goods[0].title%></li>
+                    </ul>  
+                </div>
+            <%}%>
+        <%}else{%>
+            <%for(var i=0;i<shuo.length;i++){%>
+                <div class="classify-name"><%=shuo[i].title%></div>
+                <div class="goods-items-wrap">
+                    <%for(var j=0;j<shuo[i].goods.length;j++){%>
+                    <ul>
+                        <li><img src="<%=shuo[i].goods[j].image%>" alt=""></li>
+                        <li><%=shuo[i].goods[j].title%></li>
+                    </ul>
+                     <%}%>
+                </div>
+            <%}%>
+        <%}%>
+    </script>
+    <script>
+        var em=document.querySelector('.items');
+        var goods0=document.querySelectorAll('.goods-wrap')[0];
+        var goods1=document.querySelectorAll('.goods-wrap')[1];
+        var goods2=document.querySelectorAll('.goods-wrap')[2];
+        var goods3=document.querySelectorAll('.goods-wrap')[3];
+        
+        console.log(goods0)
+        axios.get('/it').then((its)=>{
+            em.innerHTML=template('shop3List',its.data);
+            var item=em.querySelectorAll('.classify-item')
+            for(var y=0;y<item.length;y++){
+                if(item[y].innerText==window.localStorage.getItem('oo')){
+                    em.children[y].className="classify-item active";
+                }
+            }
+            var item=document.querySelectorAll('.classify-item');
+            for(var i=0;i<item.length;i++){
+			    item[i].index=i;//获取索引值，知道点击的是哪一项
+				item[i].onclick=function(){
+					for(var j=0;j<item.length;j++){
+						item[j].className="classify-item";
+					}
+					this.className="classify-item active";
+                    dd=492+this.index;
+                    if(dd>495){
+                        document.querySelector('.no-data').style.display="block"
+                        document.querySelector('.goods-wrap').style.display='none'
+                    }else if(dd>=492&&dd<=495){
+                        document.querySelector('.no-data').style.display="none"
+                        document.querySelector('.goods-wrap').style.display='block'
+                    }
+                    var xhr=new XMLHttpRequest();
+                    xhr.open('get','http://vueshop.glbuys.com/api/home/category/show?cid='+dd+'&token=1ec949a15fb709370f');
+                    xhr.send();
+                    xhr.onreadystatechange=function(){
+                        if(this.readyState===4){
+                            zz=JSON.parse(xhr.response)
+                            var shuoText = { shuo:zz.data }
+                            console.log(shuoText)
+			                var html = template('tmpls',shuoText)
+			                document.querySelector('.goods-wrap').innerHTML = html;
+                            var agoods=document.querySelectorAll('.goods-items-wrap') 
+                            console.log(agoods.length)
+                            for(var i=0;i<agoods.length;i++){
+                                agoods[i].index=i;
+                                agoods[i].onmouseover=function(){
+                                    var aul=this.querySelectorAll('ul')
+                                    console.log(aul.length);
+                                    var that=this;
+                                    for(var j=0;j<aul.length;j++){
+                                        aul[j].index=j;
+                                        aul[j].onclick=function(){
+                                            window.localStorage.setItem('aa',zz.data[that.index].goods[this.index].gid)
+                                            location.href = 'detail.html'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+				}
+			}
+        }) 
+    </script>
+    <script src="js/item.js"></script>
+</body>
+</html>

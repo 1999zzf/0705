@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/add.css">
+    <link rel="stylesheet" href="css/ydui.css">
+    <link rel="stylesheet" href="css/demo.css">
+    <script src="javascripts/ydui.flexible.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="page">
+        <div class="sub-header">
+            <div class="back"></div>
+            <div class="title">添加收货地址</div>
+        </div>
+        <div class="main">
+            <ul>
+                <li>收货人</li>
+                <li><input type="text" placeholder="收货人姓名"></li>
+            </ul>
+            <ul>
+                <li>联系方式</li>
+                <li><input type="text" placeholder="联系人手机号"></li>
+            </ul>
+            <ul>
+                <li>所在地区</li>
+                <li><input type="text" class="area" readonly placeholder="请选择所在地区" ></li>
+            </ul>
+            <ul>
+                <li>详细地址</li>
+                <li><input type="text" placeholder="街道详细地址"></li>
+            </ul>
+            <ul>
+                <li>设置为默认地址</li>
+                <li><input type="checkbox"></li>
+            </ul>
+            <button class="submit-save">保存</button>
+        </div>
+        <div class="van-overlay"></div>
+    </div>  
+</body>
+<script>
+    var ipt=document.querySelectorAll('input')
+    // window.onload = function(){
+    //     ipt[0].value='';
+    //     ipt[1].value='';
+    //     ipt[2].value='';
+    //     ipt[3].value='';
+    // }
+    all=window.localStorage.getItem('choose').split(",")
+    console.log(all)
+    console.log(ipt[0])
+    ipt[0].value=all[0]
+    ipt[1].value=all[1]
+    ipt[2].value=all[2]
+    ipt[3].value=all[3]
+</script>
+<script src="js/add.js"></script>
+<script src="javascripts/jquery.min.js"></script>
+<script src="javascripts/ydui.citys.js"></script>
+</html>

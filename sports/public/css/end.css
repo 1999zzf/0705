@@ -1,0 +1,70 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.page{
+    width: 100%;
+    min-height: 100vh;
+    background-color: white;
+    overflow: hidden;
+}
+.sub-header{
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    border-bottom:1px solid #efefef;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    padding: 0 5px;
+    box-sizing: border-box;
+}
+.sub-header .back{
+    width: 40px;
+    height: 40px;
+    background: url(../images/home/goods/back.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.sub-header .title{
+    width: 79%;
+    height: auto;
+    font-size: 16px;
+    text-align: center;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.main{
+    width: 100%;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+.main .list{
+    width: 100%;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.main .list.success{
+    color: #e51b19;
+}
+.main .list.ordernum{
+    color: #f17f1f;
+}
+.main .pay-btn{
+    width: 160px;
+    height: 30px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    margin: 0 auto;
+    background-color: #0a8ddf;
+    line-height: 30px;
+    border-radius: 4px;
+}

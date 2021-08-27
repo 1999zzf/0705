@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="css/button.css">
+    <script src="js/swiper-bundle.min.js" ></script>
+    <script src="javascripts/template-web.js"></script>
+    <script src="javascripts/axios.js"></script>
+    <script src="javascripts/better-scroll.js"></script>
+</head>
+<body style="background-color: #efefef;">
+     <div id="item">
+        <div class="header">
+        <div class="icon"><img src="images/common/class.png" alt=""></div>
+        <div class="search">
+            <div class="search-icon"><img src="images/common/search.png" alt=""></div>
+            <div class="text">请输入宝贝名称</div>
+        </div>
+        <div class="login">登录</div>
+        </div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="images/home/index/banner_1.jpg" alt=""></div>
+                <div class="swiper-slide"><img src="images/home/index/banner_2.jpg" alt=""></div>
+                <div class="swiper-slide"><img src="images/home/index/banner_3.jpg" alt=""></div>
+            </div>
+        <!--如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="nav" style="background-color: white;"></div>
+        <div class="goods"></div>
+        <div class="goods"></div>
+        <div class="goods"></div>
+        <div class="goods-nav">
+            <div class="line"></div>
+            <div class="recom-wrap">
+                <div class="icon"></div>
+                <div class="text">为你推荐</div>
+            </div>
+            <div class="line"></div>
+        </div>
+        <div class="goods-recom"></div>
+        <div class="search-component">
+            <div class="search-header">
+                <div class="close"></div>
+                <div class="search-wrap">
+                    <div class="search-input-wrap">
+                        <input type="text" placeholder="请输入宝贝名称" class="search">
+                    </div>
+                    <button type="button" class="search-btn"></button>
+                </div>
+            </div>
+            <div class="search-main">
+                <div class="search-title-wrap">
+                    <div class="search-title">热门搜索</div>
+                </div>
+                <div class="search-keywords-wrap">
+                    <div class="keywords">连衣裙</div>
+                    <div class="keywords">电脑</div>
+                    <div class="keywords">群</div>
+                    <div class="keywords">韩都衣舍</div>
+                    <div class="keywords"></div>
+                    <div class="keywords">裤</div>
+                    <div class="keywords">羽绒服</div>
+                    <div class="keywords">裙装</div>
+                    <div class="keywords">鞋子</div>
+                    <div class="keywords">鞋</div>
+                    <div class="keywords">裤子</div>
+                    <div class="keywords">羽绒</div>
+                </div>
+            </div>
+        </div>
+        <div class="buttom-nav">
+            <ul class="home active">
+                <li ><img src="images/common/home2.png" alt=""></li>
+                <li>首页</li>
+            </ul>
+            <ul class="shopping">
+                <button type="button"onclick="javascrtpt:window.location.href='cart.html'">
+                    <li><img src="images/common/cart1.png" alt=""></li>
+                    <li>购物车</li>
+                </button>  
+            </ul>
+            <ul class="my">
+                <button type="button"onclick="javascrtpt:window.location.href='my.html'">
+                    <li><img src="images/common/my1.png" alt=""></li>
+                    <li>我的</li>
+                </button>
+            </ul>
+        </div>
+    </div>
+   
+    <script>        
+        var mySwiper = new Swiper ('.swiper-container', {
+          loop: true, // 循环模式选项
+          autoplay:true,
+          // 如果需要分页器
+          pagination: {
+            el: '.swiper-pagination',
+          },
+        })        
+    </script>
+     <script id="tpl-sportsList" type="text/html">      
+        {{each ids}}
+        <ul>
+            <li style="list-style-type: none;flex: 1;">
+                <img src="{{$value.image}}" alt=""style="width: 50%; margin-left: 25%;">
+                   
+            </li>
+            <li style="list-style-type: none;">
+                <p style="text-align: center;"> {{$value.title}}</p>
+            </li>
+        </ul>               
+        {{/each}}
+    </script>
+    <script id="shopList" type="text/html">
+        {{each}}
+        <div class="goods-text">————潮流女装————</div>
+        <div class="rol1">
+            <div class="col">
+                <div class="goods-title">高跟鞋女2018新款春季单鞋</div>
+                <div class="goods-tip">精品打折</div>
+                <div class="goods-price">12.8元</div>
+                <div class="goods-image"style="width: 150px; height: 100px;"><img src="{{$value[0].items[0].image}}" alt=""style="width: 100%;height: 100%;"></div>
+            </div>
+            <div class="col">
+                <div class="list">
+                    <div class="list-title">欧美尖头蝴蝶结</div>
+                    <div class="list-tip">品质精挑</div>
+                    <div class=" goods-image list-image"><img src="{{$value[0].items[1].image}}" alt=""style="width: 30%;float: right;"></div>
+                </div>
+                <div class="list">
+                    <div class="list-title">老爹鞋女韩版</div>
+                    <div class="list-tip">品质精挑</div>
+                    <div class="goods-image list-image"><img src="{{$value[0].items[2].image}}" alt=""style="width: 30%;float: right;"></div>
+                </div>
+            </div>   
+        </div>
+        <div class="rol2">
+            <div class="goods-list">
+                <div class="goods-title">小白鞋女2018</div>
+                <div class="goods-image"style="margin:0 auto ;"><img src="{{$value[0].items[3].image}}" alt=""style="width: 100%;"></div>
+                <div class="price">￥288</div>
+                <div class="line-price">￥576</div>
+            </div>
+            <div class="goods-list">
+                <div class="goods-title">雪兰黛2018春</div>
+                <div class="goods-image"><img src="{{$value[0].items[4].image}}" alt=""style="width: 100%;"></div>
+                <div class="price">￥280</div>
+                <div class="line-price">￥560</div>
+            </div>
+            <div class="goods-list">
+                <div class="goods-title">2018夏季新款</div>
+                <div class="goods-image"><img src="{{$value[0].items[5].image}}" alt=""style="width: 100%;"></div>
+                <div class="price">￥300</div>
+                <div class="line-price">￥600</div>
+            </div>
+            <div class="goods-list">
+                <div class="goods-title">2018新款韩版</div>
+                <div class="goods-image"><img src="{{$value[0].items[6].image}}" alt=""style="width: 100%;"></div>
+                <div class="price">￥200</div>
+                <div class="line-price">￥400</div>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+    <script id="shop1List" type="text/html">
+        {{each}}
+         <div class="goods-text">————品牌男装————</div>
+            <div class="rol1">
+                <div class="col1">
+                    <div class="goods-title" style="font-size: 14px;" >新款短袖男士夏季3d立体图案</div>
+                    <div class="goods-tip" style="text-align: center;">火爆开售</div>
+                    <div class="goods-image" style="width: 90px;height: 100px;margin: 0 auto;margin: 5px;"><img src="{{$value[1].items[0].image}}" alt=""style="width: 100%;height: 100%;"></div>
+                </div>
+                <div class="col1">
+                    <div class="goods-title" style="font-size: 14px;">成人五分裤海边度假短裤男士</div>
+                    <div class="goods-tip" style="text-align: center;">火爆开售</div>
+                    <div class="goods-image"style="width: 90px;height: 100px;margin: 0 auto;margin: 5px;"><img src="{{$value[1].items[1].image}}" alt=""style="width: 100%;height: 100%;"></div>
+                </div>
+            </div>
+            <div class="rol2">
+                <div class="goods-list">
+                    <div class="goods-title">男装棉麻休闲</div>
+                    <div class="goods-image"><img src="{{$value[1].items[2].image}}" alt=""style="width: 100%;height: 100%;"></div>
+                    <div class="price">￥69</div>
+                    <div class="line-price">￥138</div>
+                </div>
+                <div class="goods-list">
+                    <div class="goods-title">牛仔裤男宽松</div>
+                    <div class="goods-image"><img src="{{$value[1].items[3].image}}" alt=""style="width: 100%;height: 100%;"></div>
+                    <div class="price">￥78</div>
+                    <div class="line-price">￥156</div>
+                </div>
+                <div class="goods-list">
+                    <div class="goods-title">衣长: 常规领</div>
+                    <div class="goods-image"><img src="{{$value[1].items[4].image}}" alt=""style="width: 100%;height: 100%;"></div>
+                    <div class="price">￥119</div>
+                    <div class="line-price">￥238</div>
+                </div>
+                <div class="goods-list">
+                    <div class="goods-title">HARSHCRUEL</div>
+                    <div class="goods-image"><img src="{{$value[1].items[5].image}}" alt=""style="width: 100%;height: 100%;"></div>
+                    <div class="price">￥778</div>
+                    <div class="line-price">￥1556</div>
+                </div>
+            </div>
+        {{/each}}
+    </script>
+    <script id="shop2List" type="text/html">
+        {{each}}
+        <div class="goods-text">————电脑办公————</div>
+            <div class="rol1">
+                <div class="col">
+                    <div class="goods-title">酷睿i5四核GTX1060独显台</div>
+                    <div class="goods-tip">精品打折</div>
+                    <div class="goods-price">4599元</div>
+                    <div class="goods-image" style="width: 150px;height: 100px"><img src="{{$value[2].items[0].image}}" alt=""style="width: 100%;height: 100%;"></div>
+                </div>
+                <div class="col">
+                    <div class="list">
+                        <div class="list-title">金属鼠标垫个性</div>
+                        <div class="list-tip">品质精挑</div>
+                        <div class="goods-image list-image"><img src="{{$value[2].items[1].image}}" alt=""style="width: 30%;float: right;"></div>
+                    </div>
+                    <div class="list">
+                        <div class="list-title">微软ARC</div>
+                        <div class="list-tip">品质精挑</div>
+                        <div class="goods-image list-image"><img src="{{$value[2].items[2].image}}" alt=""style="width: 30%;float: right;"></div>
+                    </div>
+                </div>   
+            </div>
+            <div class="rol2">
+                <div class="goods-list">
+                    <div class="goods-title">美国</div>
+                    <div class="goods-image"><img src="{{$value[2].items[3].image}}" alt=""style="width: 100%;height: 100%;"></div>
+                    <div class="price">￥149</div>
+                    <div class="line-price">￥298</div>
+                </div>
+                <div class="goods-list">
+                    <div class="goods-title">以诺双肩电脑</div>
+                    <div class="goods-image"><img src="{{$value[2].items[4].image}}" alt=""style="width: 100%;height: 100%;"></div>
+                    <div class="price">￥129</div>
+                    <div class="line-price">￥258</div>
+                </div>
+                <div class="goods-list">
+                    <div class="goods-title">联想华硕神舟</div>
+                    <div class="goods-image"><img src="{{$value[2].items[5].image}}" alt=""style="width: 100%;height: 100%;"></div>
+                    <div class="price">￥28</div>
+                    <div class="line-price">￥56</div>
+                </div>
+                <div class="goods-list">
+                    <div class="goods-title">ETS六代 笔记</div>
+                    <div class="goods-image"><img src="{{$value[2].items[6].image}}" alt=""style="width: 100%;height: 100%;"></div>
+                    <div class="price">￥108</div>
+                    <div class="line-price">￥216</div>
+                </div>
+            </div>
+        {{/each}}
+    </script>
+    <script id="shop3List" type="text/html">
+        {{each bed}}
+        <div class="goods-list">
+            <div class="goods-image"><img src="{{$value.image}}" alt="" style="width: 100%;height: 100%;"></div>
+            <div class="goods-title">{{$value.title}}</div>
+            <div class="goods-price">￥{{$value.price}}</div>
+        </div>
+
+        {{/each}}
+    </script>
+    <script>
+        var anav=document.querySelector('.nav');
+         axios.get('/nav').then((res)=>{
+            console.log(res)
+            anav.innerHTML=template('tpl-sportsList',res.data);
+            var aul=anav.querySelectorAll('ul')
+            console.log(aul.length);
+            for(var k=0;k<aul.length;k++){
+                aul[k].index=k;
+                aul[k].onclick=function(){
+                    console.log(this.innerText)
+                    window.localStorage.setItem('oo',this.innerText)
+                    location.href = 'item.html'
+                }
+            }
+        })
+        var agoods0=document.querySelectorAll('.goods')[0];
+        var agoods1=document.querySelectorAll('.goods')[1];
+        var agoods2=document.querySelectorAll('.goods')[2];
+        var list=document.querySelectorAll('.goods-list');
+        console.log(agoods0)
+        axios.get('/dd').then((go)=>{
+            console.log(go.data)
+            agoods0.innerHTML=template('shopList',go.data);
+            agoods1.innerHTML=template('shop1List',go.data);
+            agoods2.innerHTML=template('shop2List',go.data);
+            var aimg=agoods0.querySelectorAll('.goods-image');
+            var aimg1=agoods1.querySelectorAll('.goods-image');
+            var aimg2=agoods2.querySelectorAll('.goods-image')
+            console.log(aimg.length)
+            for(var i=0;i<aimg.length;i++){
+                aimg[i].index=i;
+                aimg[i].onclick=function(){
+                    console.log(go.data.con[0].items[this.index].gid)
+                    console.log(aimg[this.index])
+                    window.localStorage.setItem('aa',go.data.con[0].items[this.index].gid)
+                    location.href = 'detail.html'
+                }
+            }
+            for(var i=0;i<aimg1.length;i++){
+                aimg1[i].index=i;
+                aimg1[i].onclick=function(){
+                    console.log(go.data.con[1].items[this.index].gid)
+                    console.log(aimg1[this.index])
+                    window.localStorage.setItem('aa',go.data.con[1].items[this.index].gid)
+                    location.href = 'detail.html'
+                }
+            }
+            for(var i=0;i<aimg2.length;i++){
+                aimg2[i].index=i;
+                aimg2[i].onclick=function(){
+                    console.log(go.data.con[2].items[this.index].gid)
+                    console.log(aimg2[this.index])
+                    window.localStorage.setItem('aa',go.data.con[2].items[this.index].gid)
+                    location.href = 'detail.html'
+                }
+            }  
+        })
+        var arecom=document.querySelector('.goods-recom')
+        axios.get('/aa').then((are)=>{
+            
+            console.log(are.data)
+            arecom.innerHTML=template('shop3List',are.data);
+            var list=arecom.querySelectorAll('.goods-list');
+            console.log(list.length)
+            for(var i=0;i<list.length;i++){
+                list[i].index=i;
+                list[i].onclick=function(){
+                    console.log(are.data.bed[this.index].gid)
+                    console.log(list[this.index])
+                    window.localStorage.setItem('aa',are.data.bed[this.index].gid)
+                    location.href = 'detail.html'
+                }
+            }
+        })
+    </script>
+    <script src="js/index.js"></script>
+</body>
+</html>

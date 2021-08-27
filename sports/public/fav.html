@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/fav.css">
+    <title>Document</title>
+</head>
+<body style="font-size: 16px;">
+    <div>
+        <div class="page">
+            <div class="sub-header">
+                <div class="back"></div>
+                <div class="title">我的收藏</div>
+            </div>
+            <div class="main">
+                <div class="goods-list">
+                    <div class="image">
+                        <img src="" alt="">
+                    </div>
+                    <div class="title">dsfdsfd</div>
+                    <div class="price">￥25.5</div>
+                    <div class="btn-wrap">
+                        <div class="btn">购买</div>
+                        <div class="btn">删除</div>
+                    </div>
+                </div>
+            </div>
+            <div class="no-data" style="display: none;">您还没有收藏商品！</div>
+        </div>
+    </div>
+    <div class="van-overlay" style="z-index: 2004;display: none;"></div>
+    <div class="van-dialog" style="z-index: 2005;display: none;">
+        <div class="van-dialog__content">
+            <div class="van-dialog__message">确认要删除吗？</div>
+        </div>
+        <div class="van-hairline--top van-dialog__footer van-dialog__footer--buttons">
+            <button class="van-button van-button--default van-button--large van-dialog__cancel">
+                <span class="van-button__text">取消</span>
+            </button>
+            <button class="van-button van-button--default van-button--large van-dialog__confirm van-hairline--left">
+                <span class="van-button__text">确认</span>
+            </button>
+        </div>
+    </div>
+    <script src="js/detail.js"></script>
+</body>
+<script>
+    var aimg=document.querySelector('img')
+    var title=document.querySelectorAll('.title')[1]
+    var aprice=document.querySelector('.price')
+    bb=JSON.parse( window.localStorage.getItem('cc'))
+    console.log(bb)
+    aimg.src=bb.data.images[0]
+    title.innerHTML=bb.data.title
+    aprice.innerHTML="￥"+bb.data.price
+    var btn=document.querySelectorAll('.van-button__text')[1]
+    var obtn=document.querySelectorAll('.van-button__text')[0]
+    var abtn=document.querySelectorAll('.btn')[1]
+    console.log(abtn);
+    abtn.onclick=function(){
+        document.querySelector('.van-dialog').style.display="block";
+        document.querySelector('.van-overlay').style.display="block";
+    }
+    btn.onclick=function(){
+        document.querySelector('.van-dialog').style.display="none";
+        document.querySelector('.van-overlay').style.display="none";
+        document.querySelector('.main').removeChild(document.querySelector('.goods-list'))
+    }
+    obtn.onclick=function(){
+        document.querySelector('.van-dialog').style.display="none";
+        document.querySelector('.van-overlay').style.display="none";
+    }
+    var btna=document.querySelectorAll('.btn')[0]
+    btna.onclick=function(){
+        window.location.href='detail.html';
+    }
+</script>
+</html>

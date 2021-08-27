@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/order.css">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div class="page">
+            <div class="sub-header">
+                <div class="back"></div>
+                <div class="title">全部订单</div>
+            </div>
+            <div class="tags-wrap">
+                <div class="tags active">全部订单</div>
+                <div class="tags">待付款</div>
+                <div class="tags">待收货</div>
+                <div class="tags">待评价</div>
+            </div>
+            <div class="main">
+                <div class="cont">
+                    <div class="order-list">
+                        <div class="ordernum-wrap">
+                            <div class="ordernum"></div>
+                            <div class="status">待付款</div>
+                        </div>
+                        <div class="item-list">
+                            <div class="image">
+                                <img src="" alt="">
+                            </div>
+                            <div class="title"></div>
+                            <div class="amount"></div>
+                        </div>
+                        <div class="total-wrap">
+                            <div class="total"></div>
+                            <div class="status-wrap">
+                                <div class="status-btn">取消订单</div>
+                                <div class="status-btn">去付款</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cont"></div>
+                <div class="cont"></div>
+                <div class="cont"></div>
+            </div>
+        </div>
+    </div>
+    <div class="van-overlay" style="z-index: 2005;display: none;"></div>
+    <div class="van-dialog" style="z-index: 2006;display: none;">
+        <div class="van-dialog__content">
+            <div class="van-dialog__message">确认要取消吗？</div>
+        </div>
+        <div class="van-hairline--top van-dialog__footer van-dialog__footer--buttons">
+            <button class="van-button van-button--default van-button--large van-dialog__cancel">
+                <span class="van-button__text">取消</span>
+            </button>
+            <button class="van-button van-button--default van-button--large van-dialog__confirm van-hairline--left">
+                <span class="van-button__text">确认</span>
+            </button>
+        </div></div>
+    <script>
+        var aimg=document.querySelector('img')
+        var title=document.querySelectorAll('.title')[1]
+        var span=document.querySelector('.total')
+        zz=JSON.parse( window.localStorage.getItem('gid'))
+        aimg.src=JSON.parse(zz.key2).data.images[0]
+        title.innerHTML=JSON.parse(zz.key2).data.title;
+        xx=JSON.parse( window.localStorage.getItem('xx'))
+        var input=document.querySelector('.amount')
+        input.innerHTML='x'+xx;
+        total=JSON.parse(zz.key2).data.price +JSON.parse(zz.key2).data.freight
+        span.innerHTML='实付金额：￥'+total*xx;
+        document.querySelector('.ordernum').innerHTML="订单编号："+window.localStorage.getItem('aa')
+
+        var btn=document.querySelectorAll('.status-btn')[0]
+        var btno=document.querySelectorAll('.status-btn')[1]
+        var abtn=document.querySelectorAll('.van-button__text')[1]
+        var obtn=document.querySelectorAll('.van-button__text')[0]
+        btn.onclick=function(){
+            document.querySelector('.van-dialog').style.display="block";
+            document.querySelector('.van-overlay').style.display="block";
+        }
+        abtn.onclick=function(){
+            document.querySelector('.van-dialog').style.display="none";
+            document.querySelector('.van-overlay').style.display="none";
+            document.querySelector('.main').removeChild(document.querySelectorAll('.cont')[0])
+            document.querySelector('.main').removeChild(document.querySelectorAll('.cont')[0])
+        }
+        obtn.onclick=function(){
+            document.querySelector('.van-dialog').style.display="none";
+            document.querySelector('.van-overlay').style.display="none";
+        }
+        if( document.querySelectorAll('.cont')[0]!=''){
+            var atags=document.querySelectorAll('.tags');
+            var ocont=document.querySelectorAll('.cont')
+            for(var j=0;j<atags.length;j++){
+                atags[j].className="tags";
+                ocont[j].style.display="none";
+            }
+            atags[0].className="tags active";
+            ocont[0].style.display="block";
+            document.querySelectorAll('.cont')[1].innerHTML=
+                `
+                <div class="order-list">
+                        <div class="ordernum-wrap">
+                            <div class="ordernum">订单编号：${window.localStorage.getItem('aa')}</div>
+                            <div class="status">待付款</div>
+                        </div>
+                        <div class="item-list">
+                            <div class="image">
+                                <img src="${JSON.parse(zz.key2).data.images[0]}" alt="">
+                            </div>
+                            <div class="title">${JSON.parse(zz.key2).data.title}</div>
+                            <div class="amount">${'x'+JSON.parse( window.localStorage.getItem('xx'))}</div>
+                        </div>
+                        <div class="total-wrap">
+                            <div class="total">实付金额：￥${JSON.parse(zz.key2).data.price +JSON.parse(zz.key2).data.freight*JSON.parse( window.localStorage.getItem('xx'))}</div>
+                            <div class="status-wrap">
+                                <div class="status-btn" >取消订单</div>
+                                <div class="status-btn">去付款</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+                // window.localStorage.setItem('now',document.querySelectorAll('.status')[0].innerHTML)
+        }else{
+            document.querySelectorAll('.cont')[1].innerHTML=''
+        }
+        
+        btno.onclick=function(){
+            btn.style.display='none'
+            btno.innerHTML='已收货';
+            document.querySelector('.status').innerHTML='已收货'
+            document.querySelectorAll('.cont')[1].innerHTML=''
+            var atags=document.querySelectorAll('.tags');
+            var ocont=document.querySelectorAll('.cont')
+            zz=JSON.parse( window.localStorage.getItem('gid'))
+            for(var j=0;j<atags.length;j++){
+                atags[j].className="tags";
+                ocont[j].style.display="none";
+            }
+            console.log(document.querySelector('.status').innerHTML)
+            atags[0].className="tags active";
+            ocont[0].style.display="block";
+            document.querySelectorAll('.cont')[3].innerHTML=
+                `
+                <div class="order-list">
+                        <div class="ordernum-wrap">
+                            <div class="ordernum">订单编号：${window.localStorage.getItem('aa')}</div>
+                            <div class="status">已收货</div>
+                        </div>
+                        <div class="item-list">
+                            <div class="image">
+                                <img src="${JSON.parse(zz.key2).data.images[0]}" alt="">
+                            </div>
+                            <div class="title">${JSON.parse(zz.key2).data.title}</div>
+                        </div>
+                        <div class="total-wrap">
+                            <div class="status-wrap">
+                                <div class="status-btn" style="margin-right:0px">评价</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+                var pin=document.querySelectorAll('.status-btn')[2]
+                pin.onclick=function(){
+                    window.location.href="评价.html"
+                }
+        }
+    </script>
+    <script>
+        console.log(document.querySelectorAll('.item-list').length)
+        var list=document.querySelectorAll('.item-list')
+        for(var i=0;i<list.length;i++){
+            list[i].index=i;
+            list[i].onclick=function(){
+                window.location.href='ordermun.html'
+            }
+        }
+    </script>
+    <script src="js/order.js"></script>
+</body>
+</html>

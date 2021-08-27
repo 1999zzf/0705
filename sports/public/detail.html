@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/detail.css">
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <script src="js/swiper-bundle.min.js" ></script>
+    <script src="javascripts/template-web.js"></script>
+    <script src="javascripts/axios.js"></script>
+    <title>Document</title>
+</head>
+<body style="font-size: 16px;">
+    <div> 
+        <div>
+            <div class="details-header">
+                <div class="back"></div>
+                <div class="tab-wrap">
+                    <div class="tab-name active">商品</div>
+                    <div class="tab-name">详情</div>
+                    <div class="tab-name">评价</div>
+                </div>
+                <div id="cart-icon" class="cart-icon">
+                    <div class="spot" style="display: none;"></div>
+                </div>
+            </div>
+            <div class="sub-page">
+                <div class="page">
+                    <div class="swpier-wrap swiper-container swiper-container-horizontal">
+                        <img src="" alt="">
+                    </div>
+                    <div class="goods-ele-main">
+                        <div class="goods-title"></div>
+                        <div class="price"></div>
+                        <ul class="sales-wrap">
+                            <li>快递</li>
+                            <li>月销量</li>
+                        </ul>
+                    </div>
+                    <div class="reviews-main">
+                        <div class="reviews-title">商品评价</div>
+                        <div class="yes">
+                            <div class="reviews-wrap"></div>
+                            <div class="reviews-more">查看更多评价</div>
+                        </div>
+                        <div class="no-date">暂无评价！</div>
+                    </div>
+                    <div class="bottom-btn-wrap">
+                        <div class="btn fav">收藏</div>
+                        <div class="btn cart">加入购物车</div>
+                    </div>
+                    <div class="mask"  style="display: none;"></div>
+                </div>
+                <div class="cart-panel up" style="display: none;">
+                    <div class="goods-info">
+                        <div class="close-panel-wrap">
+                            <div class="spot"></div>
+                            <div class="line"></div>
+                            <div class="close"></div>
+                        </div>
+                        <div class="goods-img">
+                            <img src="" alt="">
+                        </div>
+                        <div class="goods-wrap">
+                            <div class="goods-title"></div>
+                            <div class="price"></div>
+                            <div class="goods-code"></div>
+                        </div>
+                    </div>
+                    <div class="attr-wrap">
+                        <div class="attr-list">
+                            <div class="attr-name"></div>
+                            <div class="val-wrap"></div> 
+                        </div>
+                        <div class="attr-list">
+                            <div class="attr-name"></div>
+                            <div class="val-wrap"></div> 
+                        </div>
+                    </div>
+                    <div class="amount-wrap">
+                        <div class="amount-name">购买数量</div>
+                        <div class="amount-input-wrap">
+                            <div class="btn dec active">-</div>
+                            <div class="amount-input">
+                                <input type="tel"value='1'>
+                            </div>
+                            <div class="btn inc">+</div>
+                        </div>
+                    </div>
+                    <div class="sure-btn">确定</div>
+                </div>
+            </div>
+            <div class="sub-page" style="display: none;">
+                <div class="page">
+                    <div class="content"></div>
+                </div>
+            </div>
+            <div class="sub-page" style="display: none;">
+                <div class="page" style="margin: 55px auto;">
+                    <div class="reviews-main">
+                        <div class="reviews-title"></div>
+                        <div class="reviews-wrap">
+                            <div class="review-list"></div>
+                        </div>
+                        <div class="no-date" style="display:none">暂无评价！</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="van-toast van-toast--middle van-toast--text" style="z-index: 2023;display: none;">
+        <div class="van-toast__text">收藏成功</div>
+    </div>
+    <script  id="tmpl" type="text/html">
+        {{each shuaiges}}
+        <div class="reviews-list">
+            <div class="uinfo">
+                <div class="head"><img src="{{$value.head}}" alt=""></div>
+                <div class="nickname">{{$value.nickname}}</div>
+            </div>
+            <div class="reviews-content">{{$value.content}}</div>
+            <div class="reviews-date">{{$value.times}}</div>
+        </div>
+        {{/each}}
+    </script>
+    <script>
+        var kk=document.querySelector('.goods-title');
+        var price=document.querySelector('.price')
+        var aa=document.querySelectorAll('img')[0]
+        var li0=document.querySelectorAll('li')[0];
+        var li1=document.querySelectorAll('li')[1];
+        var sub2=document.querySelectorAll('.sub-page')[1]
+        var acontent=sub2.querySelector('.content')
+        var aimg=document.querySelector('.goods-img')
+        var aaimg=aimg.querySelector('img')
+        var atext=document.querySelectorAll('.goods-title')[1]
+        var aprice=document.querySelectorAll('.price')[1]
+        var xhr=new XMLHttpRequest();
+        xhr.open('get','http://vueshop.glbuys.com/api/home/goods/info?gid='+window.localStorage.getItem('aa')+'&type=details&token=1ec949a15fb709370f');
+        xhr.send();
+        xhr.onreadystatechange=function(){
+        if(this.readyState===4){
+           
+            bb=JSON.parse( xhr.response)
+            kk.innerHTML=bb.data.title ;
+            atext.innerHTML=bb.data.title;
+            price.innerHTML='￥'+bb.data.price
+            aprice.innerHTML='￥'+bb.data.price
+            aa.src=bb.data.images[0]
+            aaimg.src=bb.data.images[0]
+            li0.innerHTML='快递：'+bb.data.freight+'元'
+            li1.innerHTML='月销量'+bb.data.sales+'件';
+            acontent.innerHTML=bb.data.bodys;
+        }
+    }
+    var no=document.querySelectorAll('.no-date')[0]
+    var no1=document.querySelectorAll('.no-date')[1]
+    var yes=document.querySelector('.yes')
+    var title0=document.querySelectorAll('.reviews-title')[0]
+    var title1=document.querySelectorAll('.reviews-title')[1]
+    var dd=new XMLHttpRequest();
+    dd.open('get','http://vueshop.glbuys.com/api/home/reviews/index?gid='+window.localStorage.getItem('aa')+'&token=1ec949a15fb709370f&page=1');
+        dd.send();
+        dd.onreadystatechange=function(){
+        if(this.readyState===4){
+            ee=JSON.parse( dd.response)
+            if(ee.data=='没有数据'){
+                no.style.display='block'
+                yes.style.display="none"
+                title0.innerHTML='商品评价('+ee.status+')'
+            }else{
+                 var shuaigesText = { shuaiges:ee.data }
+			// 将上面使用模板语法的占位变量内部的{{ $value.属性}}替代，注意用括号引起来
+			var html = template('tmpl',shuaigesText)
+			// 将上面模板{{ each 占位变量 }}替换成实际值，用id指定位置
+			document.querySelectorAll('.reviews-wrap')[0].innerHTML = html
+			// document.querySelectorAll('.reviews-wrap')[1].innerHTML = html
+            title0.innerHTML='商品评价('+ee.pageinfo.total+')'
+            // title1.innerHTML='商品评价('+ee.pageinfo.total+')'
+            }
+            if(ee.pageinfo.pagenum>1){
+                for(let i=1;i<=ee.pageinfo.pagenum;i++){
+                    var bb=new XMLHttpRequest();
+                    bb.open('get','http://vueshop.glbuys.com/api/home/reviews/index?gid='+window.localStorage.getItem('aa')+'&token=1ec949a15fb709370f&page='+i);
+                    bb.send();
+                   
+        bb.onreadystatechange=function(){
+            if(this.readyState===4){
+                if (bb.status >= 200 && bb.status < 300){ 
+                    zz=JSON.parse( bb.response)
+                    if(zz.data=='没有数据'){
+                        no1.style.display='block'
+                        yes.style.display="none"
+                        title1.innerHTML='商品评价('+zz.status+')'
+                    }else{
+                        var shuaigesText = { shuaiges:zz.data }
+			            var html = template('tmpl',shuaigesText)
+			            document.querySelectorAll('.reviews-wrap')[1].innerHTML += html
+                        title1.innerHTML='商品评价('+zz.pageinfo.total+')'
+                    }
+                }
+            }
+        }
+                }
+            }
+            }
+        }
+    </script>
+    <script>
+        var aname=document.querySelectorAll('.tab-name')
+        var page=document.querySelectorAll('.sub-page')
+        var btn=document.querySelector('.reviews-more')
+        var abtn=document.querySelector('.cart')
+        var amask=document.querySelector('.mask')
+        var aup=document.querySelector('.up')
+        var body=document.querySelector('body')
+        var aclose=document.querySelector('.close')
+        var oname=document.querySelector('.attr-name')
+        var aval=document.querySelector('.val')
+        for(var i=0;i<aname.length;i++){
+            aname[i].index=i;
+            aname[i].onclick=function(){
+					for(var j=0;j<aname.length;j++){
+						aname[j].className="tab-name";
+						page[j].style.display="none";
+					}
+					this.className="tab-name active";
+					page[this.index].style.display="block"
+				}
+			}
+            btn.onclick=function(){
+                aname[0].className="tab-name";
+                page[0].style.display="none";
+                aname[2].className="tab-name active";
+				page[2].style.display="block"
+            }
+            abtn.onclick=function(){
+                amask.style.display='block'
+                aup.style.display='block';
+            }
+            aclose.onclick=function(){
+                amask.style.display='none';
+                aup.style.display='none';
+            }
+            var attrlist=document.querySelectorAll('.attr-list')
+            var tt=new XMLHttpRequest();
+        tt.open('get','http://vueshop.glbuys.com/api/home/goods/info?gid='+window.localStorage.getItem("aa")+'&type=spec&token=1ec949a15fb709370f');
+        tt.send();
+        tt.onreadystatechange=function(){
+        if(this.readyState===4){
+            zz=JSON.parse( tt.response)
+            window.localStorage.setItem('ce',tt.response)
+            if(zz.data.length>1){
+                document.querySelectorAll('.attr-name')[0].innerHTML=zz.data[0].title;
+                document.querySelectorAll('.attr-name')[1].innerHTML=zz.data[1].title;
+                for(var i=0;i<zz.data[0].values.length;i++){
+                document.querySelectorAll('.val-wrap')[0].innerHTML+=
+                `
+                <span class='val'>${zz.data[0].values[i].value}</span>
+                `
+                }
+                for(var aj=0;aj<zz.data[1].values.length;aj++){
+                    document.querySelectorAll('.val-wrap')[1].innerHTML+=
+                    `
+                    <span class='val'>${zz.data[1].values[aj].value}</span>
+                    `
+                }
+
+            }else{
+                document.querySelectorAll('.attr-name')[0].innerHTML=zz.data[0].title;
+                for(var ai=0;ai<zz.data[0].values.length;ai++){
+                document.querySelectorAll('.val-wrap')[0].innerHTML+=
+                `
+                <span class='val'>${zz.data[0].values[ai].value}</span>
+                    `
+                }
+            }
+            var awrap=document.querySelectorAll('.val-wrap')[0]
+            var aval=awrap.querySelectorAll('.val')
+            for(var i=0;i<aval.length;i++){
+                aval[i].index=i;
+                aval[i].onclick=function(){
+                    for(var j=0;j<aval.length;j++){
+						aval[j].className="val";
+					}
+                    this.className="val active"
+                    window.localStorage.setItem('ll', this.innerHTML)//颜色
+                }
+            }
+            var owrap=document.querySelectorAll('.val-wrap')[1]
+            var oval=owrap.querySelectorAll('.val')
+            for(var i=0;i<oval.length;i++){
+                oval[i].index=i;
+                oval[i].onclick=function(){
+                    for(var j=0;j<oval.length;j++){
+						oval[j].className="val";
+					}
+                    this.className="val active"
+                    window.localStorage.setItem('dd', this.innerHTML)//尺寸
+                }
+            }
+            var user = {
+                key1: tt.response,
+                key2: xhr.response
+            }
+            var sure=document.querySelector('.sure-btn');
+            console.log(sure)
+            var afav=document.querySelector('.fav')
+            var aspot=document.querySelector('.spot')
+            var icon=document.querySelector('.cart-icon')
+            console.log(bb.data.gid)
+            sure.onclick=function(){
+                // var names = {
+                //     key1: window.localStorage.getItem('ll'),
+                //     key2: window.localStorage.getItem('dd'),
+                //     key5:bb.data.gid
+                // }
+                // let arr = []
+                // for (let i in names) {
+                //     arr.push(names[i]);
+                // }
+                // console.log( arr); 
+                // if ("numbers" in localStorage) {
+                //     list2=window.localStorage.getItem('numbers').split(',');
+                //     const len = list2.length
+                //     let result = []
+                //     const sliceNum = 6
+                //     for(let i = 0; i < len / sliceNum; i++){
+                //         result.push(list2.slice(i * sliceNum, (i+1) * sliceNum))
+                //     } for(let j = 0; j < (sliceNum - len % sliceNum); j++) {
+                //         result[result.length - 1].push({})
+                //     }
+                //     console.log( result) 
+                    
+                // result.push(arr)
+                // console.log( result)
+                // window.localStorage.setItem('numbers',result);
+                // console.log( window.localStorage.getItem('numbers'))
+                // }
+                for(var o=0;o<aval.length;o++){
+                    for(var p=0;p<oval.length;p++){
+                        if(oval[p].className==='val active'&&aval[o].className==='val active'){
+                            aspot.style.display='block'
+                            window.localStorage.setItem("gid", JSON.stringify(user))
+                            document.querySelector('.van-toast--text').style.display='block';
+                            document.querySelector('.van-toast__text').innerHTML='添加成功'
+                            // window.localStorage.setItem('gid', JSON.stringify(obj)) 
+                            // arr.push(obj)
+                            // console.log(arr)
+                            return 
+                        }else if(oval[p].className==="val"&&aval[o].className==="val active"){
+                            document.querySelector('.van-toast').style.display='block';
+                            document.querySelector('.van-toast__text').innerHTML='请选择尺寸'
+                            return 
+                        }else if(aval[o].className==="val"&&oval[p].className==="val active"){
+                            document.querySelector('.van-toast').style.display='block';
+                            document.querySelector('.van-toast__text').innerHTML='请选择颜色'
+                        }
+                    }
+                }  
+                return
+            } 
+            
+            icon.onclick=function(){
+                location.href = 'cart.html'
+            }
+            afav.onclick=function(){
+                window.localStorage.setItem('cc',xhr.response)
+            }         
+        }  
+    }       
+    </script>
+    <script>
+        var adec=document.querySelector('.dec');
+        var ainc=document.querySelector('.inc')
+        var put=document.querySelector('input');
+        ainc.onclick = function() {
+			put.value = parseInt(put.value) + 1;
+            console.log(put.value)
+            window.localStorage.setItem('xx',put.value)
+            if(put.value >1){
+                adec.className="btn dec"
+            }
+        }
+        adec.onclick = function() {
+			if(put.value <= 1) {
+                put.value = 1;
+            } else {
+                put.value = parseInt(put.value) - 1;
+                console.log(put.value)
+                window.localStorage.setItem('xx',put.value)
+            }
+            if(put.value >1){
+                adec.className="btn dec"
+            }else{
+                adec.className="btn dec active"
+            }
+        } 
+        window.localStorage.setItem('xx',put.value)
+    </script>
+    <script src="js/detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/button.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <script src="javascripts/template-web.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div>
+            <div class="cart-main">
+                <div class="sub-header">
+                    <div class="title">购物车</div>
+                </div>
+                <div class="lay">
+                <div class="cart-list" >
+                    <div class="select-btn active"></div>
+                    <div class="image-wrap">
+                        <div class="image">
+                            <img src="" alt="">
+                        </div>
+                        <div class="del">删除</div>
+                    </div>
+                    <div class="goods-wrap">
+                        <div class="goods-title"></div>
+                        <div class="goods-attr">
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="buy-wrap">
+                            <div class="price"></div>
+                            <div class="amount-input-wrap">
+                                <div class="btn dec active">-</div>
+                            <div class="amount-input">
+                                <input type="tel"value='1'>
+                            </div>
+                            <div class="btn inc">+</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="orderend-wrap">
+                    <div class="select-area">
+                        <div class="select-wrap">
+                            <div class="select-btn active"></div>
+                            <div class="select-text">全选</div>
+                        </div>
+                        <div class="total">
+                            "运费:"
+                            <span></span>
+                            "合计:"
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="orderend-btn disable">去结算</div>
+                </div>
+            </div>
+        </div>
+        <div class="buttom-nav">
+            <ul class="home">
+                <button type="button"onclick="javascrtpt:window.location.href='index.html'">
+                   <li ><img src="images/common/home1.png" alt=""></li>
+                   <li>首页</li> 
+                </button>
+                
+            </ul>
+            <ul class="shopping active">
+                <li><img src="images/common/cart2.png" alt=""></li>
+                <li>购物车</li>
+            </ul>
+            <ul class="my">
+                <button type="button"onclick="javascrtpt:window.location.href='my.html'">
+                    <li><img src="images/common/my1.png" alt=""></li>
+                    <li>我的</li>
+                </button>
+            </ul>
+        </div>
+    </div>
+    <script>
+        var cart=document.querySelector('.cart-list')
+        var aimg=document.querySelector('img')
+        var title=document.querySelector('.goods-title')
+        var aprice=document.querySelector('.price')
+        var span=document.querySelectorAll('span')[0]
+        var main=document.querySelector('.cart-main')
+        var aspan=document.querySelectorAll('span')[2]
+        var ospan=document.querySelectorAll('span')[3]
+        zz=JSON.parse( window.localStorage.getItem('gid'))
+        xx=JSON.parse( window.localStorage.getItem('xx'))
+        aimg.src=JSON.parse(zz.key2).data.images[0]
+        title.innerHTML=JSON.parse(zz.key2).data.title
+        aprice.innerHTML="￥"+JSON.parse(zz.key2).data.price
+        aspan.innerHTML="￥"+JSON.parse(zz.key2).data.freight
+        total=JSON.parse(zz.key2).data.price +JSON.parse(zz.key2).data.freight
+        ospan.innerHTML="￥"+total*xx
+        if(JSON.parse(zz.key1).data.length>1){
+            document.querySelectorAll('span')[0].innerHTML=JSON.parse(zz.key1).data[0].title+"："+window.localStorage.getItem('ll');
+            document.querySelectorAll('span')[1].innerHTML=JSON.parse(zz.key1).data[1].title+"："+window.localStorage.getItem('dd');
+        }else if(JSON.parse(zz.key1).data.length=1){
+            document.querySelectorAll('span')[0].innerHTML=JSON.parse(zz.key1).data[0].title+"："+window.localStorage.getItem('ll');
+        }
+        var adel=document.querySelector('.del')
+        var abtn=document.querySelectorAll('.select-btn')[1] 
+        adel.onclick=function(){
+            document.querySelector('.cart-main').removeChild(document.querySelector('.lay'))
+            aspan.innerHTML="￥"+0
+            ospan.innerHTML="￥"+0
+            abtn.className="select-btn"
+            aspan.innerHTML="￥"+JSON.parse(zz.key2).data.freight
+            ospan.innerHTML="￥"+JSON.parse(zz.key2).data.price
+        }        
+        xx=JSON.parse( window.localStorage.getItem('xx'))
+        var input=document.querySelector('input')
+        input.value=xx;
+        var adec=document.querySelector('.dec');
+        var ainc=document.querySelector('.inc')
+        var put=document.querySelector('input');
+        var btn=document.querySelector('.orderend-btn')
+        ainc.onclick = function() {
+			put.value = parseInt(put.value) + 1;
+            if(put.value >1){
+                adec.className="btn dec"
+            }
+        }
+        adec.onclick = function() {
+			if(put.value <= 1) {
+                put.value = 1;
+            } else {
+                put.value = parseInt(put.value) - 1;
+            }
+            if(put.value >1){
+                adec.className="btn dec"
+            }else{
+                adec.className="btn dec active"
+            }
+        }
+        var selectbtn=document.querySelectorAll('.select-btn')[0]
+        if(selectbtn.className=="select-btn active"){
+            btn.style.backgroundColor="red"
+        }else if(selectbtn.className=="select-btn"){
+            
+            btn.style.backgroundColor="black";
+        }
+        btn.onclick=function(){
+            window.location.href='ture.html';
+        }
+    </script>
+    <script src="js/cart.js"></script>
+    <!-- <script src="js/shop.js"></script> -->
+</body>
+</html>
